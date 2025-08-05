@@ -136,6 +136,11 @@ RUN pip3 install --user --no-cache-dir pwntools ROPgadget one_gadget unicorn key
 
 # Download exploit template with multiple fallbacks
 # Inside your Dockerfile
+
+
+#USER hacker
+ENV PATH="/home/hacker/.local/bin:${PATH}"
+
 USER root
 
 RUN wget -O /usr/local/bin/exploit_template.py "https://raw.githubusercontent.com/tibane0/ctf-pwn/main/exploit_template.py" || \
@@ -143,5 +148,8 @@ RUN wget -O /usr/local/bin/exploit_template.py "https://raw.githubusercontent.co
     chmod +x /usr/local/bin/exploit_template.py
 
 USER hacker 
+
+
+#RUN export PATH=~/.local/bin/
 
 CMD ["/bin/bash"]
