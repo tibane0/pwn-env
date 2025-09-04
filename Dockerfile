@@ -117,15 +117,15 @@ RUN curl -s -o checksec https://raw.githubusercontent.com/slimm609/checksec.sh/$
         mv checksec /usr/local/bin/ 
 
 # Create user
-RUN useradd -m hacker && \
-    echo "hacker ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    mkdir -p /home/hacker/workspace && \
-    chown -R hacker:hacker /home/hacker && \
-    chmod -R 755 /home/hacker
+RUN useradd -m pwn && \
+    echo "pwn ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
+    mkdir -p /home/pwn/workspace && \
+    chown -R pwn:pwn /home/pwn && \
+    chmod -R 755 /home/pwn
 
-USER hacker
+USER pwn
 
-WORKDIR /home/hacker/workspace
+WORKDIR /home/pwn/workspace
 
 # Install GEF
 RUN wget -q -O ~/.gdbinit-gef.py https://gef.blah.cat/py && \
@@ -138,8 +138,7 @@ RUN pip3 install --user --no-cache-dir pwntools ROPgadget one_gadget unicorn key
 # Inside your Dockerfile
 
 
-#USER hacker
-ENV PATH="/home/hacker/.local/bin:${PATH}"
+ENV PATH="/home/pwn/.local/bin:${PATH}"
 
 USER root
 
@@ -147,7 +146,7 @@ RUN wget -O /usr/local/bin/exploit_template.py "https://raw.githubusercontent.co
     curl -sSLo /usr/local/bin/exploit_template.py "https://raw.githubusercontent.com/tibane0/ctf-pwn/main/exploit_template.py" && \
     chmod +x /usr/local/bin/exploit_template.py
 
-USER hacker 
+USER pwn
 
 
 #RUN export PATH=~/.local/bin/
